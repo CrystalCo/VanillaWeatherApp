@@ -1,5 +1,5 @@
 main {
-    margin: 50px auto;
+    margin: 0px auto;
     text-align: center;
     background-image: url('https://s3.amazonaws.com/codecademy-content/courses/intermediate-javascript-requests/wanderlust/background_photo_desktop.jpg');
     background-size: cover;
@@ -80,26 +80,6 @@ main {
     height: 200px;
   }
   
-  .venue {
-    width: 275px;
-    height: 500px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  }
-  
-  .venueimg {
-    width: 200px;
-    height: 300px;
-  }
-  
-  #venues h2 {
-    font-family: Work Sans;
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 0.77;
-    text-align: center;
-    padding-top: 5px;
-  }
-  
   #destination {
     font-family: Montserrat;
     font-size: 30px;
@@ -112,6 +92,7 @@ main {
   .sectiontitle {
     height: 70px;
     width: 300px;
+    margin-top: 50px !important;
     align-items: center;
   }
   
@@ -122,12 +103,6 @@ main {
     letter-spacing: 3.4px;
     text-align: left;
     color: #4a4a4a;
-  }
-  
-  #venues {
-    display: flex;
-    justify-content: space-around;
-    min-height: 500px;
   }
   
   #weather {
@@ -170,12 +145,12 @@ main {
       background-image: url('https://s3.amazonaws.com/codecademy-content/courses/intermediate-javascript-requests/wanderlust/background_photo_moble.jpg');
       height: 500px;
     }
-    #venues, #weather {
+    #weather {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    .venue, .weather {
+    .weather {
       margin: 10px auto;
       display: flex;
       flex-direction: column;
