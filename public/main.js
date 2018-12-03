@@ -1,6 +1,7 @@
 // APIXU Info
 const apiKey = '&APPID=6f2c26f2eea8cdaefefd94729d081acf';
 const forecastUrl = 'http://api.openweathermap.org/data/2.5/';
+const weatherIconUrl = 'http://openweathermap.org/img/w/'
 
 // Page Elements
 const $input = $('#city');
@@ -11,15 +12,15 @@ const $weatherDivs = [$("#weather1"), $("#weather2"), $("#weather3"), $("#weathe
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 // AJAX functions
-async function getForecast() {
-    const urlToFetch = forecastUrl + apiKey + '&q=' + $input.val() + '&days=4&hours=11';
+async function get5DayForecast() {
+    const urlToFetch = forecastUrl + 'forecast?q=' + $input.val() + apiKey;
 
     try {
         let response = await fetch(urlToFetch);
         if (response.ok) {
             let jsonResponse = await response.json();
             console.log(jsonResponse);
-            let days = jsonResponse.forecast.forecastday;
+            let days = jsonResponse.list;
             return days;
         }
     } catch(error) {
@@ -31,21 +32,21 @@ async function getForecast() {
 function renderForecast(days) {
     $weatherDivs.forEach(($day, index) => {
       let weatherContent =
-        '<h2> High: ' + days[index].day.maxtemp_f + ' F / ' + days[index].day.maxtemp_c + ' C </h2>' +
-        '<h2> Low: ' + days[index].day.mintemp_f + ' F / ' + days[index].day.mintemp_c + 'C </h2>' +
-        '<img src="http://' + days[index].day.condition.icon +
-            '" class="weathericon" />' +
-        '<h2>' + weekDays[(new Date(days[index].date)).getDay()] + '</h2>';
+        '<h2> High: ' + days[index].main.temp_max + ' F </h2>' +
+        '<h2> Low: ' + days[index].main.temp_min + ' F </h2>' +
+        '<img src="' + weatherIconUrl + days[index].weather[0].icon +
+            '.png" class="weathericon" />' +
+        '<h3>' + days[index].weather[0].description + '</h3>' +
+        '<h2>' + weekDays[(new Date(days[index].dt)).getDay()] + '</h2>';
       $day.append(weatherContent);
     });
 }
 
 function executeSearch() {
-    $venueDivs.forEach(venue => venue.empty());
     $weatherDivs.forEach(day => day.empty());
     $destination.empty();
     $container.css("visibility", "visible");
-    getForecast().then(forecast => renderForecast(forecast));
+    get5DayForecast().then(forecast => renderForecast(forecast));
     return false;
 }
 
