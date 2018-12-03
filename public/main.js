@@ -29,11 +29,18 @@ async function get5DayForecast() {
 }
 
 // Render functions
+function kelvinToFahrenheit(kelvin) {
+    fahren = 9 / 5 * (kelvin - 273) + 32;
+    return Math.round(fahren * 10) / 10;
+}
+
 function renderForecast(days) {
     $weatherDivs.forEach(($day, index) => {
+      const maxTempInF = kelvinToFahrenheit(days[index].main.temp_max);
+      const minTempInF = kelvinToFahrenheit(days[index].main.temp_min);
       let weatherContent =
-        '<h2> High: ' + days[index].main.temp_max + ' F </h2>' +
-        '<h2> Low: ' + days[index].main.temp_min + ' F </h2>' +
+        '<h2> High: ' + maxTempInF + ' F </h2>' +
+        '<h2> Low: ' + minTempInF + ' F </h2>' +
         '<img src="' + weatherIconUrl + days[index].weather[0].icon +
             '.png" class="weathericon" />' +
         '<h3>' + days[index].weather[0].description + '</h3>' +
