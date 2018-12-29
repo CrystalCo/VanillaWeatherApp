@@ -61,15 +61,15 @@ function renderCurrentForecast(currentDay) {
 
 function render5DayForecast(days) {
     $weatherDivs.forEach(($day, index) => {
-      const maxTempInF = Math.round(days[index].main.temp_max);
-      const minTempInF = Math.round(days[index].main.temp_min);
+      const maxTempInF = Math.round(days[index*8].main.temp_max);
+      const minTempInF = Math.round(days[index*8].main.temp_min);
       let weatherContent =
         '<h2> High: ' + maxTempInF + ' F&deg; </h2>' +
         '<h2> Low: ' + minTempInF + ' F&deg; </h2>' +
-        '<img src="' + weatherIconUrl + days[index].weather[0].icon +
+        '<img src="' + weatherIconUrl + days[index*8].weather[0].icon +
             '.png" class="weathericon" />' +
-        '<h3>' + days[index].weather[0].description + '</h3>' +
-        '<h2>' + weekDays[(new Date(days[index].dt * 1000).getDay())-1] + '</h2>';
+        '<h3>' + days[index*8].weather[0].description + '</h3>' +
+        '<h2>' + weekDays[(new Date(days[index*8].dt * 1000).getDay())-1] + '</h2>';
       $day.append(weatherContent);
     });
 }

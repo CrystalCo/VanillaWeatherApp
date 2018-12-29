@@ -9,59 +9,66 @@
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro|Work+Sans" rel="stylesheet">
   </head>
   <body>
+    <div class="wrapper">
 
-    <main>
-      <h1>Where do you want to land?</h1>
-      <form autocomplete="off">
-        <input type="text" id="city">
-        <button id="button" type="submit">Submit</button>
-      </form>
+
+    <main class="head">
+      <!-- <div class="head"> -->
+        <h1>Where do you want to land?</h1>
+        <form autocomplete="off">
+          <input type="text" id="city">
+          <button id="button" type="submit">Submit</button>
+        </form>
+      <!-- </div> -->
     </main>
     <div class="container">
-    <div id="destination">
+      <!-- <div id="destination">
+
+      </div> -->
+      <div class="sectiontitle sectiontitle1">
+        <h2>RIGHT NOW</h2>
+      </div>
+      <section id="currentWeather">
+
+          <div class="weather" id="weatherNow">
+
+          </div>
+
+      </section>
+
+      <div class="sectiontitle sectiontitle2">
+        <h2>5 DAY FORECAST</h2>
+      </div>
+      <section id="weather">
+
+          <div class="weather" id="weather1">
+
+          </div>
+          <div class="weather" id="weather2">
+
+          </div>
+          <div class="weather" id="weather3">
+
+          </div>
+          <div class="weather" id="weather4">
+
+          </div>
+          <div class="weather" id="weather5">
+
+          </div>
+
+      </section>
+      <footer>
+      </footer>
 
     </div>
-    <div class="sectiontitle">
-      <h2>RIGHT NOW</h2>
-    </div>
-    <section id="currentWeather">
-
-        <div class="weather" id="weatherNow">
-
-        </div>
-
-    </section>
-
-    <div class="sectiontitle">
-      <h2>5 DAY FORECAST</h2>
-    </div>
-    <section id="weather">
-
-        <div class="weather" id="weather1">
-
-        </div>
-        <div class="weather" id="weather2">
-
-        </div>
-        <div class="weather" id="weather3">
-
-        </div>
-        <div class="weather" id="weather4">
-
-        </div>
-        <div class="weather" id="weather5">
-
-        </div>
-
-    </section>
-    <footer>
-    </footer>
-
-  </div>
     <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
     <script src="public/main.js"></script>
+
+    
+  </div>
   </body>
 </html>

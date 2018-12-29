@@ -1,8 +1,30 @@
+/* Header */
+main {
+  grid-area: header;
+}
+.container {
+  grid-area: main;
+}
+
+footer {
+  grid-area: footer;
+}
+
+.wrapper {
+  /* display: grid; */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "header header header header header"
+    "main main main main main"
+    "footer footer footer footer footer";
+}
+
+
 main {
     text-align: center;
     background-image: url('../images/TheBeach.jpg');
     background-size: cover;
-    text-align: center;
   }
   
   h1 {
@@ -43,58 +65,13 @@ main {
     height: 100px;
   }
   
-  footer {
-    display: flex;
-    align-items: center;
-    height: 50px;
-  }
   
-  .weather h2 {
-    position: relative;
-    padding: 5px;
-  }
-  
+  /* Main Body */
   .container {
-    max-width: 1200px;
-    margin: auto;
     visibility: hidden;
+    /* grid-row: 2; */
   }
-  
-  .weather h2 {
-    font-family: Montserrat;
-    font-size: 18px;
-    line-height: 0.78;
-    text-align: left;
-    color: #4a4a4a;
-  }
-  
-  .weather {
-    width: 200px;
-    height: 300px;
-    padding: 2%;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-  }
-  
-  .weathericon {
-    width: 200px;
-    height: 200px;
-  }
-  
-  #destination {
-    font-family: Montserrat;
-    font-size: 30px;
-    font-weight: 600;
-    letter-spacing: 0.9px;
-    text-align: left;
-    color: #27b7c1;
-  }
-  
-  .sectiontitle {
-    padding: 5% 0;
-    /* margin-top: 50px !important; */
-    align-items: center;
-  }
-  
+
   .sectiontitle h2 {
     font-family: Montserrat;
     font-size: 22px;
@@ -103,10 +80,68 @@ main {
     text-align: center;
     color: #4a4a4a;
   }
+
+  .sectiontitle1 {
+    /* grid-column: 3; */
+    /* grid-row: 1; */
+  }
+
+  #currentWeather {
+    display: grid;
+    align-self: center;
+    justify-content: center;
+  }
+
+  .sectiontitle2 {
+    /* grid-column: 3; */
+    /* grid-row: 3; */
+  }
+
+  #weather {
+    display: grid;
+    align-self: center;
+    justify-content: center;
+  }
+
+  #weather1 {
+    grid-column: 1;
+  }
+  #weather2 {
+    grid-column: 2;
+  }
+  #weather3 {
+    grid-column: 3;
+  }
+  #weather4 {
+    /* grid-column: 4; */
+  }
+  #weather5 {
+    /* grid-column: 5; */
+  }
+
+  .weather {
+    width: 200px;
+    /* height: 300px; */
+    margin: 1em;
+    padding: 5%;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  }
+  
+  .weather h2 {
+    font-family: Montserrat;
+    font-size: 18px;
+    line-height: 0.78;
+    text-align: left;
+    color: #4a4a4a;
+    padding: 5px;
+  }
+  
+  .weathericon {
+    width: 200px;
+    height: 200px;
+  }
   
   #weather, #currentWeather {
-    display: flex;
-    justify-content: space-around;
     min-height: 350px;
   }
   
@@ -122,7 +157,7 @@ main {
     line-height: 1;
     letter-spacing: 0.4px;
     text-align: left;
-    color: #000;
+    color: #fff;
   }
   
   #button {
