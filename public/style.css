@@ -1,7 +1,6 @@
 main {
-    margin: 0px auto;
     text-align: center;
-    background-image: url('https://s3.amazonaws.com/codecademy-content/courses/intermediate-javascript-requests/wanderlust/background_photo_desktop.jpg');
+    background-image: url('../images/TheBeach.jpg');
     background-size: cover;
     text-align: center;
   }
@@ -56,7 +55,7 @@ main {
   }
   
   .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: auto;
     visibility: hidden;
   }
@@ -72,6 +71,7 @@ main {
   .weather {
     width: 200px;
     height: 300px;
+    padding: 2%;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
   }
   
@@ -90,9 +90,8 @@ main {
   }
   
   .sectiontitle {
-    height: 70px;
-    width: 300px;
-    margin-top: 50px !important;
+    padding: 5% 0;
+    /* margin-top: 50px !important; */
     align-items: center;
   }
   
@@ -101,7 +100,7 @@ main {
     font-size: 22px;
     font-weight: 300;
     letter-spacing: 3.4px;
-    text-align: left;
+    text-align: center;
     color: #4a4a4a;
   }
   
@@ -142,7 +141,7 @@ main {
   
   @media (max-width: 860px) {
     main {
-      background-image: url('https://s3.amazonaws.com/codecademy-content/courses/intermediate-javascript-requests/wanderlust/background_photo_moble.jpg');
+      background-image: url('../images/TheBeach.jpg');
       height: 500px;
     }
     #weather, #currentWeather {
