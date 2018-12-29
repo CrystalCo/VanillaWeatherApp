@@ -49,7 +49,6 @@ async function get5DayForecast() {
 function renderCurrentForecast(currentDay) {    
     const currentTemp = Math.round(currentDay.main.temp_max);
     const today = weekDays[(new Date(currentDay.dt * 1000).getDay())-1];
-    console.log("New Date: " + new Date(currentDay.dt * 1000).getDay());
     let weatherContent =
     '<h2>' + currentTemp + ' F&deg; </h2>' +
     '<img src="' + weatherIconUrl + currentDay.weather[0].icon +
