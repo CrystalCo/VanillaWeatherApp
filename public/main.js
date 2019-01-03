@@ -59,6 +59,37 @@ function renderCurrentForecast(currentDay) {
     $currentWeather.append(weatherContent);
 }
 
+function avgMax(days) {
+    // days object contains temperatures for every 3 hours
+
+    // Empty array to contain High's of first 24 hours
+    let oneDayMaxTempRange = [];
+    for (i = 0; i < 8; i++) {
+        oneDayMaxTempRange.push(Math.round(days[i].main.temp_max));
+    }
+    console.log(`High's temperature range: ${oneDayMaxTempRange}`);
+
+    // Displays highest temperature for first 24 hours
+    let highestTemp = oneDayMaxTempRange.reduce(function (highest, temperature) {
+        return highest > temperature ? highest : temperature;
+    }, {});
+    console.log(`Highest Temperature: ${highestTemp}`);
+
+    // Empty array to contain Low's of first 24 hours
+    let oneDayMinTempRange = [];
+    for (i = 0; i < 8; i++) {
+        oneDayMinTempRange.push(Math.round(days[i].main.temp_min));
+    }
+    console.log(`Low's temperature range: ${oneDayMinTempRange}`);
+
+    // Displays lowest temperature for first 24 hours
+    let lowestTemp = oneDayMinTempRange.reduce(function (lowest, temperature) {
+        return lowest < temperature ? lowest : temperature;
+    }, {});
+    console.log(`Lowest Temperature: ${lowestTemp}`);
+
+}
+
 function render5DayForecast(days) {
     $weatherDivs.forEach(($day, index) => {
       const maxTempInF = Math.round(days[index*8].main.temp_max);
@@ -80,6 +111,7 @@ function executeSearch() {
     $container.css("visibility", "visible");
     getCurrentForecast().then(forecast => renderCurrentForecast(forecast));
     get5DayForecast().then(forecast => render5DayForecast(forecast));
+    get5DayForecast().then(forecast => avgMax(forecast));
     return false;
 }
 
