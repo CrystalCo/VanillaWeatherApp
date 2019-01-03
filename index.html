@@ -22,9 +22,6 @@
       <!-- </div> -->
     </main>
     <div class="container">
-      <!-- <div id="destination">
-
-      </div> -->
       <div class="sectiontitle sectiontitle1">
         <h2>RIGHT NOW</h2>
       </div>
@@ -34,6 +31,14 @@
 
           </div>
 
+      </section>
+
+      <section id="destination">
+        <button onclick="getLocation()">try it</button>
+        <p>TEST</p>
+        <p id="demo">
+
+        </p>
       </section>
 
       <div class="sectiontitle sectiontitle2">
@@ -56,8 +61,8 @@
           <div class="weather" id="weather5">
 
           </div>
-
       </section>
+      
       <footer>
       </footer>
 
@@ -67,8 +72,23 @@
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
     <script src="public/main.js"></script>
+    <script>
+      var x = document.getElementById("demo");
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
 
-    
+      function showPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude + 
+        "<br>Longitude: " + position.coords.longitude; 
+      }
+    </script>
+
+
   </div>
   </body>
 </html>

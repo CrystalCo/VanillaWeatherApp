@@ -1,14 +1,16 @@
 // APIXU Info
 const apiKey = '&APPID=6f2c26f2eea8cdaefefd94729d081acf';
 const forecastUrl = 'http://api.openweathermap.org/data/2.5/';
-const weatherIconUrl = 'http://openweathermap.org/img/w/'
+const weatherIconUrl = 'http://openweathermap.org/img/w/';
 
 // Page Elements
 const $input = $('#city');
 const $submit = $('#button');
 const $destination = $('#destination');
+const $demo = $('#demo');
 const $container = $('.container');
 const $currentWeather = $('#weatherNow') ;
+const $window = $('window');
 const $weatherDivs = [$("#weather1"), $("#weather2"), $("#weather3"), $("#weather4"), $("#weather5")];
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -46,6 +48,21 @@ async function get5DayForecast() {
 }
 
 // Render functions
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    $demo.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  $demo.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude; 
+}
+
+
 function renderCurrentForecast(currentDay) {    
     const currentTemp = Math.round(currentDay.main.temp);
     const today = weekDays[(new Date(currentDay.dt * 1000).getDay())-1];
@@ -85,6 +102,7 @@ function render5DayForecast(days) {
             '.png" class="weathericon" />' +
         '<h3>' + days[index*8].weather[0].description + '</h3>' +
         '<h2>' + weekDays[(new Date(days[index*8].dt * 1000).getDay())-1] + '</h2>';
+        console.log(weekDays[(new Date(days[index*8].dt * 1000).getDay())-1]);
       $day.append(weatherContent);
     });
 }
@@ -98,4 +116,22 @@ function executeSearch() {
     return false;
 }
 
+$window.on(getLocation);
 $submit.click(executeSearch);
+
+
+/*
+var x = document.getElementById("destination");
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude; 
+}
+*/

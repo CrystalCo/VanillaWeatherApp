@@ -86,7 +86,7 @@ main {
     /* grid-row: 1; */
   }
 
-  #currentWeather {
+  #currentWeather, #weather, #destination {
     display: grid;
     align-self: center;
     justify-content: center;
@@ -95,12 +95,6 @@ main {
   .sectiontitle2 {
     /* grid-column: 3; */
     /* grid-row: 3; */
-  }
-
-  #weather {
-    display: grid;
-    align-self: center;
-    justify-content: center;
   }
 
   #weather1 {
@@ -141,7 +135,7 @@ main {
     height: 200px;
   }
   
-  #weather, #currentWeather {
+  #weather, #currentWeather, #destination {
     min-height: 350px;
   }
   
