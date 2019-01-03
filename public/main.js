@@ -59,9 +59,7 @@ function renderCurrentForecast(currentDay) {
     $currentWeather.append(weatherContent);
 }
 
-
-
-function minMaxTemp(days) {
+function render5DayForecast(days) {
     // Temperature Array for every 3 hours in a 5 day period as given by API
     const fiveDayTempRange = days.map(day => Math.round(day.main.temp));
     let twentyFourHourRange = [];
@@ -70,29 +68,19 @@ function minMaxTemp(days) {
     for (let dayTemps = 0; dayTemps < 5; dayTemps++) {
         twentyFourHourRange.push(fiveDayTempRange.splice(0, 8));
     }
-    console.log(`Twenty-Four Hour Arrays: ${JSON.stringify(twentyFourHourRange)}`);
 
     // Displays max & min temperature for each day
-    let maximumTemperatures = twentyFourHourRange.map(dayArray => {
-        return dayArray.reduce(function (max, temperature) {
-            return max > temperature ? max : temperature;
+    let maxTemps = twentyFourHourRange.map(dayArray => {
+        return dayArray.reduce(function (max, temp) {
+            return max > temp ? max : temp;
         }, {});
     });
-    console.log(`Maximum temperatures: ${JSON.stringify(maximumTemperatures)}`);
+    let minTemps = twentyFourHourRange.map(dayArray => dayArray.reduce((min, temp) => min < temp ? min : temp));
 
-    let minimumTemperatures = twentyFourHourRange.map(dayArray => {
-        return dayArray.reduce((min, temperature) => min < temperature ? min : temperature);
-    });
-    console.log(`Minimum Temperatures: ${JSON.stringify(minimumTemperatures)}`);
-}
-
-function render5DayForecast(days) {
     $weatherDivs.forEach(($day, index) => {
-      const maxTempInF = Math.round(days[index*8].main.temp_max);
-      const minTempInF = Math.round(days[index*8].main.temp_min);
       let weatherContent =
-        '<h2> High: ' + maxTempInF + ' F&deg; </h2>' +
-        '<h2> Low: ' + minTempInF + ' F&deg; </h2>' +
+        '<h2> High: ' + maxTemps[index] + ' F&deg; </h2>' +
+        '<h2> Low: ' + minTemps[index] + ' F&deg; </h2>' +
         '<img src="' + weatherIconUrl + days[index*8].weather[0].icon +
             '.png" class="weathericon" />' +
         '<h3>' + days[index*8].weather[0].description + '</h3>' +
@@ -107,7 +95,6 @@ function executeSearch() {
     $container.css("visibility", "visible");
     getCurrentForecast().then(forecast => renderCurrentForecast(forecast));
     get5DayForecast().then(forecast => render5DayForecast(forecast));
-    get5DayForecast().then(forecast => minMaxTemp(forecast));
     return false;
 }
 
