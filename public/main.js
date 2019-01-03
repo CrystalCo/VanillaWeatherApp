@@ -47,7 +47,7 @@ async function get5DayForecast() {
 
 // Render functions
 function renderCurrentForecast(currentDay) {    
-    const currentTemp = Math.round(currentDay.main.temp_max);
+    const currentTemp = Math.round(currentDay.main.temp);
     const today = weekDays[(new Date(currentDay.dt * 1000).getDay())-1];
     let weatherContent =
     '<h2>' + currentTemp + ' F&deg; </h2>' +
@@ -59,10 +59,76 @@ function renderCurrentForecast(currentDay) {
     $currentWeather.append(weatherContent);
 }
 
+function crystalmax(obj){
+    current_max = -Infinity;
+    for (let i = 0; i < Object.keys(obj).length; i++){
+        if (obj[i] > current_max){
+            current_max = obj[i];
+        }
+    }
+    return current_max;
+}
+
+function crystalmin(obj){
+    current_min = Infinity;
+    for (let i = 0; i < Object.keys(obj).length; i++){
+        if (obj[i] < current_min){
+            current_min = obj[i];
+        }
+    }
+    return current_min;
+}
+
+
 function minMaxTemp(days) {
     // 'days' object contains temperatures for every 3 hours
+    // Array that contains arrays of temperature ranges per each 24 hours that pass
+    const fiveDayTempRange = days.map(day => Math.round(day.main.temp));
+    console.log(`Temperature range for 5 days: ${JSON.stringify(fiveDayTempRange)}`);
+    // Returns new list: 27,26,27,25,26,29,32,31,31,32,31,29,29,35,37,35,32,31,31,31,33,40,43,39,36,34,33,33,35,39,38,36,36,35,35,35,37,40,43
+    // console.log(`Length of fiveDayTempRange:  ${fiveDayTempRange.length}`);  // 39 or 38
 
+    let max_results = new Array();
+    let min_results = new Array();
+    let results = new Array();
+    
+    for (let i = 0; i < 5; i++) {
+        day_results = new Array();
+        for (let j = 0; j < 8; j++) {
+            day_results.push(fiveDayTempRange[8 * i + j]);
+        }
+        results.push(day_results);
 
+        max_temps = crystalmax(day_results);
+        min_temps = crystalmin(day_results);
+        max_results.push(max_temps);
+        min_results.push(min_temps);
+        
+    }
+    console.log(`Results:  ${JSON.stringify(results)}`);
+    console.log(`Max Results:  ${JSON.stringify(max_results)}  Min Results:  ${min_results}`);
+    
+
+    // *****************************************************************************************
+
+    //      const fiveDayTempRange = days.map(day => Math.round(day.main.temp));
+    let twentyFourHourRange = [];
+    // Divide up fiveDayTempRange by 8 items per new array
+    for (let dayTemps = 0; dayTemps < 5; dayTemps++) {
+        twentyFourHourRange.push(fiveDayTempRange.splice(0, 8));
+    }
+    console.log(`Twenty-Four Hour Arrays: ${JSON.stringify(twentyFourHourRange)}`);
+    // Displays: [[40,38,36,35,33,31,31,36],[39,35,33,32,31,31,33,40],[43,39,36,35,35,35,37,37],
+    // [37,37,37,38,40,42,44,45],[45,43,40,37,35,34,35,41]]
+
+    let maximumTemperatures = twentyFourHourRange.map(dayArray => {
+        return dayArray.reduce(function (max, temperature) {
+            return max > temperature ? max : temperature;
+        }, {});
+    });
+    console.log(`LOOK -- maximum temperatures: ${JSON.stringify(maximumTemperatures)}`);
+
+    
     // Empty array to contain temperature range of first 24 hours
     let oneDayTempRange = [];
     for (i = 0; i < 8; i++) {
