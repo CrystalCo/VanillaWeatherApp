@@ -10,7 +10,6 @@ const $destination = $('#destination');
 const $demo = $('#demo');
 const $container = $('.container');
 const $currentWeather = $('#weatherNow');
-// const $samplebutton = $('#button2');
 const $weatherDivs = [$("#weather1"), $("#weather2"), $("#weather3"), $("#weather4"), $("#weather5")];
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 const zipcode = 60661;
@@ -37,7 +36,7 @@ async function getCurrentForecast() {
 }
 
 async function get5DayForecast() {
-    const urlToFetch = forecastUrl + 'forecast?q=' + $input.val() + '&units=imperial' + apiKey;
+    const urlToFetch = forecastUrl + 'forecast?' + weatherParameter + '&units=imperial' + apiKey;
 
     try {
         let response = await fetch(urlToFetch);
@@ -53,17 +52,29 @@ async function get5DayForecast() {
 }
 
 // Render functions
-
 function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-    weatherParameter = `lat=${Math.round(latitude)}&lon=${Math.round(longitude)}`;
-  } else {
-    weatherParameter = `zip=${zipcode},us`;
-    let positionContent = '<p>Geolocation is not supported by this browser.</p>';
-    $demo.append(positionContent);
-  }
+    try {
+        if (navigator.geolocation) {
+            return navigator.geolocation.getCurrentPosition(showPosition) ? weatherParameter = `lat=${Math.round(latitude)}&lon=${Math.round(longitude)}` : weatherParameter = `zip=${zipcode},us`;
+        } 
+    } catch(error) {
+        console.log(error);
+        let positionContent = '<p>Geolocation is not supported by this browser.</p>';
+        $demo.append(positionContent);
+    }
 }
+    
+// function getLocation() {
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(showPosition);
+//     weatherParameter = `lat=${Math.round(latitude)}&lon=${Math.round(longitude)}`;
+//     console.log(`weather parameter: ${weatherParameter}`);
+//   } else {
+//     weatherParameter = `zip=${zipcode},us`;
+//     let positionContent = '<p>Geolocation is not supported by this browser.</p>';
+//     $demo.append(positionContent);
+//   }
+// }
 
 function showPosition(position) {
     latitude = position.coords.latitude;
@@ -116,21 +127,23 @@ function render5DayForecast(days) {
             '.png" class="weathericon" />' +
         '<h3>' + days[index*8].weather[0].description + '</h3>' +
         '<h2>' + weekDays[(new Date(days[index*8].dt * 1000).getDay())-1] + '</h2>';
-        console.log(weekDays[(new Date(days[index*8].dt * 1000).getDay())-1]);
+    
       $day.append(weatherContent);
     });
 }
 
 function executeGeolocationWeather() {
     getLocation();
-    getCurrentForecast();
+    $weatherDivs.forEach(day => day.empty());
+    getCurrentForecast().then(forecast => renderCurrentForecast(forecast));
+    get5DayForecast().then(forecast => render5DayForecast(forecast));
+    return false;
 }
 
 function executeSearch() {
     weatherParameter = `q=${$input.val()}`;
+    $currentWeather.empty();
     $weatherDivs.forEach(day => day.empty());
-    // $destination.empty();
-    // $container.css("visibility", "visible");
     getCurrentForecast().then(forecast => renderCurrentForecast(forecast));
     get5DayForecast().then(forecast => render5DayForecast(forecast));
     return false;
@@ -138,21 +151,3 @@ function executeSearch() {
 
 executeGeolocationWeather();
 $submit.click(executeSearch);
-// $submit.onclick = function() {
-//     weatherParameter = `q=${$input.val()}`;
-// }
-
-
-/*
-function renderCurrentForecast(currentDay) {    
-    const currentTemp = Math.round(currentDay.main.temp);
-    const today = weekDays[(new Date(currentDay.dt * 1000).getDay())-1];
-    let weatherContent =
-    '<h2>' + currentTemp + ' F&deg; </h2>' +
-    '<img src="' + weatherIconUrl + currentDay.weather[0].icon +
-    '.png" class="weathericon" />' +
-    '<h3>' + currentDay.weather[0].description + '</h3>' +
-    '<h2>' + today + '</h2>';
-    
-    $currentWeather.append(weatherContent);
-*/
