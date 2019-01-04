@@ -6,8 +6,6 @@ const weatherIconUrl = 'http://openweathermap.org/img/w/';
 // Page Elements
 const $input = $('#city');
 const $submit = $('#button');
-const $destination = $('#destination');
-const $demo = $('#demo');
 const $container = $('.container');
 const $currentWeather = $('#weatherNow');
 const $weatherDivs = [$("#weather1"), $("#weather2"), $("#weather3"), $("#weather4"), $("#weather5")];
@@ -58,9 +56,8 @@ function getLocation() {
             return navigator.geolocation.getCurrentPosition(showPosition) ? weatherParameter = `lat=${Math.round(latitude)}&lon=${Math.round(longitude)}` : weatherParameter = `zip=${zipcode},us`;
         } 
     } catch(error) {
+        // Geolocation is not supported by this browser.
         console.log(error);
-        let positionContent = '<p>Geolocation is not supported by this browser.</p>';
-        $demo.append(positionContent);
     }
 }
     
@@ -72,7 +69,6 @@ function getLocation() {
 //   } else {
 //     weatherParameter = `zip=${zipcode},us`;
 //     let positionContent = '<p>Geolocation is not supported by this browser.</p>';
-//     $demo.append(positionContent);
 //   }
 // }
 
