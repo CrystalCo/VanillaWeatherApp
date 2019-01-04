@@ -9,10 +9,12 @@ const $submit = $('#button');
 const $destination = $('#destination');
 const $demo = $('#demo');
 const $container = $('.container');
-const $currentWeather = $('#weatherNow') ;
-const $window = $('window');
+const $currentWeather = $('#weatherNow');
+// const $samplebutton = $('#button2');
 const $weatherDivs = [$("#weather1"), $("#weather2"), $("#weather3"), $("#weather4"), $("#weather5")];
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+let latitude;
+let longitude;
 
 // AJAX functions
 async function getCurrentForecast() {
@@ -53,13 +55,21 @@ function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
-    $demo.innerHTML = "Geolocation is not supported by this browser.";
+    let positionContent = '<p>Geolocation is not supported by this browser.</p>';
+    // $demo.innerHTML = "Geolocation is not supported by this browser.";
+    $demo.append(positionContent);
   }
 }
 
 function showPosition(position) {
-  $demo.innerHTML = "Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude; 
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+    console.log(`Lat: ${latitude}    Lon: ${longitude}`);
+
+    let latLongPosition = '<p>Latitude: ' + position.coords.latitude + 
+    '<br>Longitude: ' + position.coords.longitude + ' </p>';
+
+    $demo.append(latLongPosition);
 }
 
 
@@ -107,16 +117,20 @@ function render5DayForecast(days) {
     });
 }
 
+function executeGeolocationWeather() {
+    getLocation();
+}
+
 function executeSearch() {
     $weatherDivs.forEach(day => day.empty());
-    $destination.empty();
-    $container.css("visibility", "visible");
+    // $destination.empty();
+    // $container.css("visibility", "visible");
     getCurrentForecast().then(forecast => renderCurrentForecast(forecast));
     get5DayForecast().then(forecast => render5DayForecast(forecast));
     return false;
 }
 
-$window.on(getLocation);
+executeGeolocationWeather();
 $submit.click(executeSearch);
 
 

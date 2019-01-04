@@ -34,11 +34,12 @@
       </section>
 
       <section id="destination">
-        <button onclick="getLocation()">try it</button>
+        <button id="button2" type="submit">try it</button>
         <p>TEST</p>
-        <p id="demo">
+        
+        <div id="demo">
 
-        </p>
+        </div>
       </section>
 
       <div class="sectiontitle sectiontitle2">
@@ -72,22 +73,6 @@
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
     <script src="public/main.js"></script>
-    <script>
-      var x = document.getElementById("demo");
-      function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-          x.innerHTML = "Geolocation is not supported by this browser.";
-        }
-      }
-
-      function showPosition(position) {
-        x.innerHTML = "Latitude: " + position.coords.latitude + 
-        "<br>Longitude: " + position.coords.longitude; 
-      }
-    </script>
-
 
   </div>
   </body>
