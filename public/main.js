@@ -80,11 +80,6 @@ function showPosition(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
     console.log(`Lat: ${latitude}    Lon: ${longitude}`);
-
-    let latLongPosition = '<p>Latitude: ' + position.coords.latitude + 
-    '<br>Longitude: ' + position.coords.longitude + ' </p>';
-
-    $demo.append(latLongPosition);
 }
 
 
