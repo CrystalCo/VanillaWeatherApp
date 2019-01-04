@@ -13,12 +13,15 @@ const $currentWeather = $('#weatherNow');
 // const $samplebutton = $('#button2');
 const $weatherDivs = [$("#weather1"), $("#weather2"), $("#weather3"), $("#weather4"), $("#weather5")];
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const zipcode = 60661;
+let weatherParameter;
 let latitude;
 let longitude;
 
+
 // AJAX functions
 async function getCurrentForecast() {
-    const urlToFetch = forecastUrl + 'weather?q=' + $input.val() + '&units=imperial' + apiKey;
+    const urlToFetch = forecastUrl + 'weather?' + weatherParameter + '&units=imperial' + apiKey;
 
     try {
         let response = await fetch(urlToFetch);
@@ -54,9 +57,10 @@ async function get5DayForecast() {
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
+    weatherParameter = `lat=${Math.round(latitude)}&lon=${Math.round(longitude)}`;
   } else {
+    weatherParameter = `zip=${zipcode},us`;
     let positionContent = '<p>Geolocation is not supported by this browser.</p>';
-    // $demo.innerHTML = "Geolocation is not supported by this browser.";
     $demo.append(positionContent);
   }
 }
@@ -119,9 +123,11 @@ function render5DayForecast(days) {
 
 function executeGeolocationWeather() {
     getLocation();
+    getCurrentForecast();
 }
 
 function executeSearch() {
+    weatherParameter = `q=${$input.val()}`;
     $weatherDivs.forEach(day => day.empty());
     // $destination.empty();
     // $container.css("visibility", "visible");
@@ -132,20 +138,21 @@ function executeSearch() {
 
 executeGeolocationWeather();
 $submit.click(executeSearch);
+// $submit.onclick = function() {
+//     weatherParameter = `q=${$input.val()}`;
+// }
 
 
 /*
-var x = document.getElementById("destination");
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showPosition);
-  } else {
-    x.innerHTML = "Geolocation is not supported by this browser.";
-  }
-}
-
-function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude + 
-  "<br>Longitude: " + position.coords.longitude; 
-}
+function renderCurrentForecast(currentDay) {    
+    const currentTemp = Math.round(currentDay.main.temp);
+    const today = weekDays[(new Date(currentDay.dt * 1000).getDay())-1];
+    let weatherContent =
+    '<h2>' + currentTemp + ' F&deg; </h2>' +
+    '<img src="' + weatherIconUrl + currentDay.weather[0].icon +
+    '.png" class="weathericon" />' +
+    '<h3>' + currentDay.weather[0].description + '</h3>' +
+    '<h2>' + today + '</h2>';
+    
+    $currentWeather.append(weatherContent);
 */
