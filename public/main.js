@@ -1,7 +1,7 @@
 // APIXU Info
 const apiKey = '&APPID=6f2c26f2eea8cdaefefd94729d081acf';
-const forecastUrl = 'http://api.openweathermap.org/data/2.5/';
-const weatherIconUrl = 'http://openweathermap.org/img/w/';
+const forecastUrl = 'https://api.openweathermap.org/data/2.5/';
+const weatherIconUrl = 'https://openweathermap.org/img/w/';
 
 // Page Elements
 const $input = $('#city');
